@@ -1,8 +1,4 @@
-// For maximum efficiency it would be best to
-// cut all planks in order from longest to shortest
-// and when checking the remainders checking shortest to longest.
-
-class Board {
+export class Board {
     // For storing cut lengths of a single board
     length: number;
     cuts: number[] = [];
@@ -25,98 +21,123 @@ class Board {
         return this.cuts;
     }
 
-    get remainder() { return this.remainingLength }
+    get remainder(): number {
+        return this.remainingLength;
+    }
+
+    get toString(): string {
+        return `Cuts: ${this.cuts}, Remaining: ${this.remainder}`;
+    }
 }
 
-class ListNode {
+export class ListNode {
     next: ListNode | null = null;
-    value: number | null = null;
+    value: number;
     items: Board[] = [];
 
-    constructor(value: number | null = null) {
+    constructor(value: number) {
         this.value = value;
     }
 }
 
-class Stockpile {
+export class Stockpile {
     // This is a specialized linked list
-    head: ListNode = new ListNode();
+    head: ListNode | null = null;
     length: number;
 
-    constructor(length: number) {
-        this.length = length;
+    constructor(boardLength: number) {
+        this.length = boardLength;
     }
 
-    addCut(newCut: number) {
-        let pointer = this.head;
+    getNewboard(cutLength: number): Board {
+        const board = new Board(this.length);
+        board.cut(cutLength);
+        return board;
+    }
 
-        do {
-            // newCut is less than or equal to the remainder value
-            if (newCut <= pointer.value!) {
-                const cutBoard: Board = pointer.items.pop()!;
-                cutBoard.cut(newCut);
-                if (pointer.items.length === 0) {
-                    this.popNode(pointer);
+    addCut(cutLength: number, qty: number = 1) {
+        for (let index = 0; index < qty; index++) {
+            let previous: ListNode | null = null;
+            let current = this.head;
+
+            // find the first node with enough remainder
+            while (current !== null) {
+                if (cutLength <= current.value && current.items.length > 0) {
+                    const board = current.items.pop()!;
+                    if (current.items.length === 0) {
+                        this.removeNode(previous, current);
+                    }
+                    board.cut(cutLength);
+                    this.insertBoard(board);
+                    break;
                 }
-                this.sortBoard(cutBoard);
-                return;
+                previous = current;
+                current = current.next;
             }
-        } while (pointer.next !== null)
 
-        // no unused board existed, so we append one to the end of the list
-        const newNode = new ListNode(this.length);
-        const cutBoard: Board = new Board(this.length);
-        cutBoard.cut(newCut);
-        newNode.items.push(cutBoard);
-        pointer.next = newNode;
+            // No matching board, create a new one.
+            if (current === null) {
+                const board = this.getNewboard(cutLength);
+                this.insertBoard(board);
+            }
+        }
     }
 
-    sortBoard(board: Board) {
-        let pointer = this.head;
-        do {
-            if (board.remainder == pointer.value) {
-                pointer.items.push(board);
-                return;
-            }
-            else if (board.remainder < pointer.value!) {
-                const newNode = new ListNode(board.remainder);
-                newNode.items.push(board);
-                newNode.next = pointer;
-                pointer = newNode;
-                return;
-            }
-        } while (pointer.next !== null)
+    insertBoard(board: Board) {
+        const remainder = board.remainder;
+        const newNode = new ListNode(remainder);
+        newNode.items.push(board);
+
+        // Empty list check
+        if (this.head === null) {
+            this.head = newNode;
+            return;
+        }
+
+        let previous: ListNode | null = null;
+        let current: ListNode | null = this.head;
+
+        // Find the node where the remainder fits in.
+        while (current !== null && current.value < remainder) {
+            previous = current;
+            current = current.next;
+        }
+
+        // If the reaminder is equal, push the board
+        if (current !== null && current.value === remainder) {
+            current.items.push(board);
+            return;
+        }
+
+        // Insert a brand new node
+        newNode.next = current;
+        if (previous === null) {
+            this.head = newNode;
+        } else {
+            previous.next = newNode;
+        }
     }
 
-    popNode(node: ListNode) {
-        // if node is head, set head to node.next
-        // If node is not head, find the previous node and set its next to node.next
-        // If the last node, set the previous node's next to null
+    removeNode(previous: ListNode | null, node: ListNode) {
+        // if there is no previous item, set the head to the next node.
+        if (previous === null) {
+            this.head = node.next;
+        } else {
+            previous.next = node.next;
+        }
     }
-}
 
-export function calculateCutPlan(cutLengths: number[]): void {
-    // 1) Sort cut lengths in decending order 
-    // cutLengths.sort((a, b) => b - a);
+    get boardList(): string[] {
+        const boards: string[] = [];
+        let current = this.head;
 
-    // 2) Create the array of cut boards
-    const results: Board[] = [];
+        while (current !== null) {
+            current.items.forEach((board) => {
+                boards.push(board.toString);
+            });
+            current = current.next;
+        }
 
-    // for (const cutLength of cutLengths) {
-    //     // 3) Try to fit the cut on an existing board
-    //     let fitted = false;
-    //     for (const board of results) {
-    //         if (cutLength <= board.remainder) {
-    //             board.cut(cutLength);
-    //             fitted = true;
-    //             break;
-    //         }
-    //     }
-    //     // 4) If no existing board can accommodate the cut, create a new one
-    //     if (!fitted) {
-    //         const newBoard = new Board(96);
-    //         newBoard.cut(cutLength);
-    //         results.push(newBoard);
-    //     }
-    // }
+        return boards;
+    }
 }
