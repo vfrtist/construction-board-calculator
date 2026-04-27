@@ -1,7 +1,12 @@
-export class Board {
+interface CutBoard {
+    length: number;
+    name: string;
+}
+
+export class BoardClass {
     // For storing cut lengths of a single board
     length: number;
-    cuts: number[] = [];
+    cuts: CutBoard[] = [];
     remainingLength: number;
 
     constructor(length: number) {
@@ -9,15 +14,17 @@ export class Board {
         this.remainingLength = length;
     }
 
-    cut(cutLength: number) {
-        if (cutLength > this.remainingLength) {
+    cut(cutBoard: CutBoard) {
+        if (cutBoard.length > this.remainingLength) {
             throw new Error("Not enough remaining length to cut");
         }
-        this.cuts.push(cutLength);
-        this.remainingLength -= cutLength;
+        this.cuts.push(cutBoard);
+        // you can add blade width by adding .125 to the cut length
+        this.remainingLength -= cutBoard.length;
+        this.remainingLength -= 0.125; // blade width
     }
 
-    get cutPlan(): number[] {
+    get cutPlan(): CutBoard[] {
         return this.cuts;
     }
 
@@ -33,7 +40,7 @@ export class Board {
 export class ListNode {
     next: ListNode | null = null;
     value: number;
-    items: Board[] = [];
+    items: BoardClass[] = [];
 
     constructor(value: number) {
         this.value = value;
@@ -44,30 +51,63 @@ export class Stockpile {
     // This is a specialized linked list
     head: ListNode | null = null;
     length: number;
+    cuts: CutBoard[] = [];
 
     constructor(boardLength: number) {
         this.length = boardLength;
     }
 
-    getNewboard(cutLength: number): Board {
-        const board = new Board(this.length);
+    calculate() {
+        this.head = null;
+        this.cutAllBoards();
+    }
+
+    get boardList(): BoardClass[] {
+        this.calculate();
+
+        let boards: BoardClass[] = [];
+
+        if (this.head != null) {
+            let current: ListNode | null = this.head;
+
+            while (current !== null) {
+                current.items.forEach((board) => {
+                    boards.push(board);
+                });
+                current = current.next;
+            }
+        }
+        return boards;
+    }
+
+    getNewboard(cutLength: CutBoard): BoardClass {
+        const board = new BoardClass(this.length);
         board.cut(cutLength);
         return board;
     }
 
-    addCut(cutLength: number, qty: number = 1) {
+    addCut(cutLength: number, name: string, qty: number = 1) {
         for (let index = 0; index < qty; index++) {
+            const cutBoard: CutBoard = { length: cutLength, name };
+            this.cuts.push(cutBoard);
+        }
+    }
+
+    cutAllBoards() {
+        // sort all boards in reverse order
+        this.cuts.sort((a, b) => b.length - a.length);
+        this.cuts.forEach((cut) => {
             let previous: ListNode | null = null;
             let current = this.head;
 
             // find the first node with enough remainder
             while (current !== null) {
-                if (cutLength <= current.value && current.items.length > 0) {
+                if (cut.length <= current.value && current.items.length > 0) {
                     const board = current.items.pop()!;
                     if (current.items.length === 0) {
                         this.removeNode(previous, current);
                     }
-                    board.cut(cutLength);
+                    board.cut(cut);
                     this.insertBoard(board);
                     break;
                 }
@@ -77,13 +117,13 @@ export class Stockpile {
 
             // No matching board, create a new one.
             if (current === null) {
-                const board = this.getNewboard(cutLength);
+                const board = this.getNewboard(cut);
                 this.insertBoard(board);
             }
-        }
+        });
     }
 
-    insertBoard(board: Board) {
+    insertBoard(board: BoardClass) {
         const remainder = board.remainder;
         const newNode = new ListNode(remainder);
         newNode.items.push(board);
@@ -125,19 +165,5 @@ export class Stockpile {
         } else {
             previous.next = node.next;
         }
-    }
-
-    get boardList(): string[] {
-        const boards: string[] = [];
-        let current = this.head;
-
-        while (current !== null) {
-            current.items.forEach((board) => {
-                boards.push(board.toString);
-            });
-            current = current.next;
-        }
-
-        return boards;
     }
 }
