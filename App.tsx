@@ -12,17 +12,13 @@ import { SceneKey, SceneList } from "./Data/SceneList";
 
 export default function App() {
     const [currentBoards, setCurrentBoards] = useState<BoardDictionary>({});
-    const [currentScene, setCurrentScene] = useState<SceneKey>("cut");
+    const [currentScene, setCurrentScene] = useState<SceneKey>("board");
     const SceneComponent = SceneList[currentScene];
 
     // First application mount
     useEffect(() => {
         setCurrentBoards(NoahList);
     }, []);
-
-    function updateScene(newScene: SceneKey) {
-        setCurrentScene(newScene);
-    }
 
     return (
         <div className="App">
@@ -31,7 +27,7 @@ export default function App() {
                     boards: currentBoards,
                     currentScene: currentScene,
                     setBoards: setCurrentBoards,
-                    setCurrentScene: updateScene,
+                    setCurrentScene: setCurrentScene,
                 }}
             >
                 <main>

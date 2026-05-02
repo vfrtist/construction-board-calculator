@@ -12,8 +12,8 @@ export type BoardDictionary = Record<string, BoardData>;
 export interface SessionData {
     boards: BoardDictionary;
     currentScene: SceneKey;
-    setBoards: Function;
-    setCurrentScene: Function;
+    setBoards: React.Dispatch<React.SetStateAction<BoardDictionary>>;
+    setCurrentScene: React.Dispatch<React.SetStateAction<SceneKey>>;
 }
 
 export const SessionContext = createContext<SessionData>({
