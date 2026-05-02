@@ -1,12 +1,31 @@
-interface CutBoard {
+export interface CutDimension {
     length: number;
     name: string;
 }
 
-export class BoardClass {
+export class BoardDimension {
+    length: number;
+    width: number;
+    height: number;
+    name: string;
+
+    constructor(
+        length: number = 96,
+        width: number = 2,
+        height: number = 4,
+        name: string = ""
+    ) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.name = name;
+    }
+}
+
+export class CutBoard {
     // For storing cut lengths of a single board
     length: number;
-    cuts: CutBoard[] = [];
+    cuts: CutDimension[] = [];
     remainingLength: number;
 
     constructor(length: number) {
@@ -14,47 +33,46 @@ export class BoardClass {
         this.remainingLength = length;
     }
 
-    cut(cutBoard: CutBoard) {
-        if (cutBoard.length > this.remainingLength) {
+    cut(dimension: CutDimension) {
+        if (dimension.length > this.remainingLength) {
             throw new Error("Not enough remaining length to cut");
         }
-        this.cuts.push(cutBoard);
+        this.cuts.push(dimension);
         // you can add blade width by adding .125 to the cut length
-        this.remainingLength -= cutBoard.length;
+        this.remainingLength -= dimension.length;
         this.remainingLength -= 0.125; // blade width
     }
 
-    get cutPlan(): CutBoard[] {
+    get cutPlan(): CutDimension[] {
         return this.cuts;
     }
 
     get remainder(): number {
         return this.remainingLength;
     }
-
-    get toString(): string {
-        return `Cuts: ${this.cuts}, Remaining: ${this.remainder}`;
-    }
 }
 
 export class ListNode {
     next: ListNode | null = null;
     value: number;
-    items: BoardClass[] = [];
-
     constructor(value: number) {
         this.value = value;
     }
 }
 
-export class Stockpile {
-    // This is a specialized linked list
-    head: ListNode | null = null;
-    length: number;
-    cuts: CutBoard[] = [];
+export class BoardNode extends ListNode {
+    items: CutBoard[] = [];
+    next: BoardNode | null = null;
+}
 
-    constructor(boardLength: number) {
-        this.length = boardLength;
+export class BoardList {
+    // This is a specialized linked list
+    head: BoardNode | null = null;
+    dimension: BoardDimension;
+    cuts: CutDimension[] = [];
+
+    constructor(boardType: BoardDimension) {
+        this.dimension = boardType;
     }
 
     calculate() {
@@ -62,13 +80,17 @@ export class Stockpile {
         this.cutAllBoards();
     }
 
-    get boardList(): BoardClass[] {
+    get length(): number {
+        return this.dimension.length;
+    }
+
+    get boardList(): CutBoard[] {
         this.calculate();
 
-        let boards: BoardClass[] = [];
+        let boards: CutBoard[] = [];
 
         if (this.head != null) {
-            let current: ListNode | null = this.head;
+            let current: BoardNode | null = this.head;
 
             while (current !== null) {
                 current.items.forEach((board) => {
@@ -80,15 +102,15 @@ export class Stockpile {
         return boards;
     }
 
-    getNewboard(cutLength: CutBoard): BoardClass {
-        const board = new BoardClass(this.length);
+    getNewboard(cutLength: CutDimension): CutBoard {
+        const board = new CutBoard(this.length);
         board.cut(cutLength);
         return board;
     }
 
     addCut(cutLength: number, name: string, qty: number = 1) {
         for (let index = 0; index < qty; index++) {
-            const cutBoard: CutBoard = { length: cutLength, name };
+            const cutBoard: CutDimension = { length: cutLength, name };
             this.cuts.push(cutBoard);
         }
     }
@@ -97,7 +119,7 @@ export class Stockpile {
         // sort all boards in reverse order
         this.cuts.sort((a, b) => b.length - a.length);
         this.cuts.forEach((cut) => {
-            let previous: ListNode | null = null;
+            let previous: BoardNode | null = null;
             let current = this.head;
 
             // find the first node with enough remainder
@@ -123,9 +145,9 @@ export class Stockpile {
         });
     }
 
-    insertBoard(board: BoardClass) {
+    insertBoard(board: CutBoard) {
         const remainder = board.remainder;
-        const newNode = new ListNode(remainder);
+        const newNode = new BoardNode(remainder);
         newNode.items.push(board);
 
         // Empty list check
@@ -134,8 +156,8 @@ export class Stockpile {
             return;
         }
 
-        let previous: ListNode | null = null;
-        let current: ListNode | null = this.head;
+        let previous: BoardNode | null = null;
+        let current: BoardNode | null = this.head;
 
         // Find the node where the remainder fits in.
         while (current !== null && current.value < remainder) {
@@ -143,13 +165,13 @@ export class Stockpile {
             current = current.next;
         }
 
-        // If the reaminder is equal, push the board
+        // If the remainder is equal, push the board
         if (current !== null && current.value === remainder) {
             current.items.push(board);
             return;
         }
 
-        // Insert a brand new node
+        // Insert a brand new node to either the head or the tail
         newNode.next = current;
         if (previous === null) {
             this.head = newNode;
@@ -158,12 +180,12 @@ export class Stockpile {
         }
     }
 
-    removeNode(previous: ListNode | null, node: ListNode) {
+    removeNode(previous: BoardNode | null, nodeToRemove: BoardNode) {
         // if there is no previous item, set the head to the next node.
         if (previous === null) {
-            this.head = node.next;
+            this.head = nodeToRemove.next;
         } else {
-            previous.next = node.next;
+            previous.next = nodeToRemove.next;
         }
     }
 }
