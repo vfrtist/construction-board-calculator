@@ -36,8 +36,6 @@ export default function App() {
             >
                 <main>
                     <SceneComponent />
-                    {/* <BoardScene piles={NoahList} />
-          <CutScene /> */}
                     <BottomButtons />
                 </main>
             </SessionContext.Provider>

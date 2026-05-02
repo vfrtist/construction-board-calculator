@@ -1,6 +1,12 @@
+import { BoardData } from "../Data/SessionContext";
+
 export interface CutDimension {
     length: number;
     name: string;
+}
+export interface CutInput {
+    dimensions: CutDimension;
+    qty: number;
 }
 
 export class BoardDimension {
@@ -33,13 +39,13 @@ export class CutBoard {
         this.remainingLength = length;
     }
 
-    cut(dimension: CutDimension) {
-        if (dimension.length > this.remainingLength) {
+    cut(cutBoard: CutDimension) {
+        if (cutBoard.length > this.remainingLength) {
             throw new Error("Not enough remaining length to cut");
         }
-        this.cuts.push(dimension);
+        this.cuts.push(cutBoard);
         // you can add blade width by adding .125 to the cut length
-        this.remainingLength -= dimension.length;
+        this.remainingLength -= cutBoard.length;
         this.remainingLength -= 0.125; // blade width
     }
 
@@ -100,6 +106,28 @@ export class BoardList {
             }
         }
         return boards;
+    }
+
+    setCuts(cuts: CutDimension[]) {
+        this.cuts = cuts;
+    }
+
+    static expandCuts(cuts: CutInput[]): CutDimension[] {
+        const expanded: CutDimension[] = [];
+
+        cuts.forEach(({ dimensions, qty }) => {
+            for (let i = 0; i < qty; i++) {
+                expanded.push(dimensions);
+            }
+        });
+
+        return expanded;
+    }
+
+    static fromBoardData(boardState: BoardData): CutBoard[] {
+        const list = new BoardList(boardState.dimension);
+        list.setCuts(BoardList.expandCuts(boardState.cuts));
+        return list.boardList;
     }
 
     getNewboard(cutLength: CutDimension): CutBoard {
@@ -165,7 +193,7 @@ export class BoardList {
             current = current.next;
         }
 
-        // If the remainder is equal, push the board
+        // If the reaminder is equal, push the board
         if (current !== null && current.value === remainder) {
             current.items.push(board);
             return;
