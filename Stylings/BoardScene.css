@@ -29,9 +29,14 @@
             border: 1px solid rgb(168, 130, 76);
             background: #f3dcac;
             flex: 1;
+            user-select: none;
 
             &.remainder {
                 background: #cbcbcb;
+            }
+
+            &.done {
+                background: #bdb19f;
             }
         }
     }
