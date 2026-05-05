@@ -44,7 +44,6 @@ export class CutBoard {
             throw new Error("Not enough remaining length to cut");
         }
         this.cuts.push(cutBoard);
-        // you can add blade width by adding .125 to the cut length
         this.remainingLength -= cutBoard.length;
         this.remainingLength -= 0.125; // blade width
     }
@@ -55,6 +54,23 @@ export class CutBoard {
 
     get remainder(): number {
         return this.remainingLength;
+    }
+
+    equals(board: CutBoard): boolean {
+        // If they aren't the same length we already know they don't match.
+        if (this.cutPlan.length != board.cutPlan.length) {
+            return false;
+        }
+        // if they are the same length we can check their individual values in order.
+        this.cutPlan.map((cut, index) => {
+            if (cut.length != board.cutPlan[index].length) {
+                console.log(
+                    `${cut.length} does not equal ${board.cutPlan[index].length}`
+                );
+                return false;
+            }
+        });
+        return true;
     }
 }
 
