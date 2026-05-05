@@ -44,10 +44,12 @@ export default function BoardSection({ id }: BoardListProps) {
             </h2>
             <ul className="container vertical">
                 {[...compactList].map(([qty, value], index) => (
-                    <div className="BoardQty">
-                        <span>{qty}</span>
-                        <Board key={index.toString()} length={value.length} board={value} />
-                    </div>
+                    <Board
+                        key={`${id}-${index.toString()}`}
+                        length={value.length}
+                        board={value}
+                        qty={qty}
+                    />
                 ))}
 
                 {/* {boardList.map((board, index) => (
