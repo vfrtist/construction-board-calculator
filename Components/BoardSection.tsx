@@ -38,14 +38,14 @@ export default function BoardSection({ id }: BoardListProps) {
     const boardList = BoardList.fromBoardData(data);
     const compactList = arrayReducer(boardList);
     return (
-        <div className="BoardList">
+        <div className="BoardList card">
             <h2>
                 {data.dimension.name} - {boardList.length} Boards
             </h2>
             <ul className="container vertical">
                 {[...compactList].map(([qty, value], index) => (
                     <Board
-                        key={`${id}-${index.toString()}`}
+                        key={index.toString()}
                         length={value.length}
                         board={value}
                         qty={qty}

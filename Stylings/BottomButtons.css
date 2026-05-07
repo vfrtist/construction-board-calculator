@@ -1,0 +1,59 @@
+#BottomButtons {
+    width: 100%;
+    background: var(--font-color-dark);
+    bottom: 0;
+    height: 64px;
+    position: fixed;
+    gap: 42px;
+    padding: 12px;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 1;
+
+    .BottomButton {
+        height: 100%;
+        aspect-ratio: 1;
+        background: none;
+        border: none;
+        padding: 4px;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: fill 0.1s, color 0.1s;
+
+        label {
+            font-size: 10pt;
+            font-family: "Zain";
+            font-weight: 400;
+            height: 14px;
+            color: var(--subtext);
+        }
+
+        .Icon {
+            flex: 1;
+            max-width: 30px;
+        }
+
+        &:hover {
+            label {
+                color: var(--accent-light);
+            }
+
+            .Icon {
+                fill: var(--accent-light);
+            }
+        }
+
+        &.active {
+            label {
+                color: var(--accent);
+            }
+
+            .Icon {
+                fill: var(--accent);
+            }
+        }
+    }
+}

@@ -16,15 +16,16 @@ export default function SubBoard({
     const [isActive, setIsActive] = useState(true);
 
     return (
-        <div
-            key={key}
-            className={`SubBoard ${isActive ? "" : "done"} ${classNames ? classNames : ""
-                }`}
-            style={{ flex: length }}
-            onClick={() => setIsActive((prev) => !prev)}
-        >
-            {length}
-            {name && ` - ${name}`}
+        <div className="SubBoard container vertical" style={{ flex: length }}>
+            {name && <div className="name">{name}</div>}
+            <div
+                key={key}
+                className={`board ${isActive ? "" : "done"} ${classNames ? classNames : ""
+                    }`}
+                onClick={() => setIsActive((prev) => !prev)}
+            >
+                {length}
+            </div>
         </div>
     );
 }

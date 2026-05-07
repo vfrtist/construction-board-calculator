@@ -8,7 +8,7 @@ export interface CutBoardSectionProps extends CutBoardHeaderProps { }
 export default function CutBoardSection({ id }: CutBoardSectionProps) {
     const pile = useContext(SessionContext).boards[id];
     return (
-        <div className="CutBoardSection">
+        <div className="CutBoardSection card">
             <CutBoardHeader id={id} />
             <form action="">
                 {pile.cuts.map((cut) => (
