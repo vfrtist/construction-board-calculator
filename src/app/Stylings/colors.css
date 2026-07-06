@@ -1,0 +1,18 @@
+:root {
+  --bright: #fefaf1;
+  --dark: #56514d;
+  --shadow-light: #56514d25;
+  --shadow: #56514d50;
+  --shadow-dark: #56514d8e;
+
+  --foreground: #fffbf3;
+  --font-color-dark: #252422;
+  --font-color-medium: #5a564d;
+  --font-color-light: #fefaf1;
+
+  --neutral: #e9e8e5;
+
+  --accent-light: #f1c979;
+  --accent: #e6a014;
+  --accent-dark: #9e7931;
+}
