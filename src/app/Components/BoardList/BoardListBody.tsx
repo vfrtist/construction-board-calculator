@@ -1,12 +1,8 @@
-import { useContext } from "react";
-import { SessionContext } from "../Data/SessionContext";
-import "../../Stylings/BoardList.css";
+import { useContext, useMemo } from "react";
+import { CardContext } from "../Generic/Card";
 import { BoardList, CutBoard } from "../../Utility/calculator";
 import Board from "./Board";
-
-export interface BoardListProps {
-  id: string;
-}
+import "../../Stylings/BoardList.css";
 
 function* arrayReducer(
   boards: CutBoard[]
@@ -33,21 +29,16 @@ function* arrayReducer(
   yield [count, left];
 }
 
-export default function BoardSection({ id }: BoardListProps) {
-  const data = useContext(SessionContext).boards[id];
-  const boardList = BoardList.fromBoardData(data);
-  const compactList = arrayReducer(boardList);
+export default function BoardListBody() {
+  const { boardLength, cutInputs } = useContext(CardContext);
+  const boardList = useMemo(() => BoardList.fromBoardData(boardLength, cutInputs), [boardLength, cutInputs]);
+
+  // Possible to implement a display style option for compact vs expanded view which would toggle this on/off.
+  // For now compact is the only view and the other option would be to map over the boardList instead of compact List
+  const compactList = useMemo(() => arrayReducer(boardList), [boardList]);
+
   return (
     <div className="BoardList card">
-      <div className="container horizontal BoardHeader">
-        <h1 className="qty">{boardList.length}</h1>
-
-        <div className="container vertical caption">
-          <h2 className="title">{data.dimension.name}</h2>
-          <h3 className="subtitle">{data.dimension.dimensions}</h3>
-        </div>
-      </div>
-
       <ul className="container vertical">
         {[...compactList].map(([qty, value], index) => (
           <Board

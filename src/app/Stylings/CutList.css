@@ -1,0 +1,43 @@
+  .CutListBody {
+      width: 100%;
+
+      .CutBoardHeader {
+          width: 100%;
+          margin-bottom: 8px;
+          justify-content: space-between;
+
+          input {
+              width: 8ch;
+          }
+
+          .NameInput {
+              width: 100%;
+              border: none;
+              font-size: 18px;
+          }
+      }
+
+      .CutListLine {
+          width: 100%;
+          justify-content: space-between;
+
+          input:not(.name) {
+              width: 8ch;
+          }
+
+          &:last-of-type {
+              margin-bottom: 20px;
+          }
+      }
+
+      input {
+          border: none;
+          border-bottom: 1px solid #b6b6b6;
+          color: var(--font-color-dark);
+          padding: 4px;
+      }
+
+      .add {
+          font-size: 20px;
+      }
+  }

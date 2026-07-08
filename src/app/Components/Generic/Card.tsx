@@ -1,19 +1,44 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
+import { CutInput } from "../../Data/Structures";
 
 export type CardState = "board" | "cut";
 
-export default function Card() {
-  const [currentState, setCurrentState] = useState<CardState>("board");
-  const [boardLength, setBoardLength] = useState(96);
+export interface CardData {
+  boardLength: number;
+  cardState: CardState;
+  cutInputs: CutInput[];
+  setBoardLength: (length: number) => void;
+  setCardState: (state: CardState) => void;
+  setCutInputs: (inputs: CutInput[]) => void;
+}
 
+export const CardContext = createContext<CardData>({
+  boardLength: 96,
+  cardState: "board",
+  cutInputs: [],
+  setBoardLength: () => { },
+  setCardState: () => { },
+  setCutInputs: () => { },
+});
+
+export default function Card() {
   return (
     <div className="card">
-      <CardHeader boardLength={boardLength} setBoardLength={setBoardLength} />
-      <CardBody currentState={currentState} />
-      <CardFooter currentState={currentState} />
+      <CardContext.Provider value={{
+        boardLength: 96,
+        cardState: "board",
+        cutInputs: [],
+        setBoardLength: () => { },
+        setCardState: () => { },
+        setCutInputs: () => { },
+      }}>
+        <CardHeader />
+        <CardBody />
+        <CardFooter />
+      </CardContext.Provider>
     </div>
   );
 }

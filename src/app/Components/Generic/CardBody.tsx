@@ -1,10 +1,13 @@
-import { CardState } from "./Card";
+import { useContext } from "react";
+import { CardContext } from "./Card";
+import CutListBody from "../CutList/CutListBody";
+import BoardListBody from "../BoardList/BoardListBody";
 
-// When doing the board calculation, stache the board calculation based on the cut input array
-// const boards = useMemo(() => {
-//   return optimizeBoards(cuts);
-// }, [cuts]);
+export default function CardBody() {
+  const { cardState } = useContext(CardContext);
 
-export default function CardBody(currentState: CardState) {
-  return <></>;
+  if (cardState === "cut") {
+    return <CutListBody></CutListBody>;
+  }
+  return <BoardListBody></BoardListBody>;
 }

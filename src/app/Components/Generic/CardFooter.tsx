@@ -1,5 +1,17 @@
-import { CardState } from "./Card";
+import { useContext } from "react";
+import { CardContext } from "./Card";
+import ToggleButtonGroup from "./ToggleButtonGroup";
+import ToggleButton from "./ToggleButton";
 
-export default function CardFooter(currentState: CardState) {
-  return <button type="button"></button>;
+export default function CardFooter() {
+  const { cardState, setCardState } = useContext(CardContext);
+
+  return <ToggleButtonGroup
+    name="Card State"
+    activeValue={cardState}
+    onChange={setCardState}
+  >
+    <ToggleButton value="cut" caption="Cut List" />
+    <ToggleButton value="board" caption="Board List" />
+  </ToggleButtonGroup>;
 }

@@ -1,4 +1,9 @@
-import { BoardData, CutDimension, CutInput, BoardDimension } from "../Data/Structures";
+import { CutDimension, CutInput, ListNode } from "../Data/Structures";
+
+class BoardNode extends ListNode {
+  items: CutBoard[] = [];
+  next: BoardNode | null = null;
+}
 
 export class CutBoard {
   // For storing cut lengths of a single board
@@ -43,36 +48,19 @@ export class CutBoard {
   }
 }
 
-export class ListNode {
-  next: ListNode | null = null;
-  value: number;
-  constructor(value: number) {
-    this.value = value;
-  }
-}
-
-export class BoardNode extends ListNode {
-  items: CutBoard[] = [];
-  next: BoardNode | null = null;
-}
-
 export class BoardList {
   // This is a specialized linked list
   head: BoardNode | null = null;
-  dimension: BoardDimension;
+  length: number;
   cuts: CutDimension[] = [];
 
-  constructor(boardType: BoardDimension) {
-    this.dimension = boardType;
+  constructor(length: number) {
+    this.length = length;
   }
 
   calculate() {
     this.head = null;
     this.cutAllBoards();
-  }
-
-  get length(): number {
-    return this.dimension.length;
   }
 
   get boardList(): CutBoard[] {
@@ -109,9 +97,9 @@ export class BoardList {
     return expanded;
   }
 
-  static fromBoardData(boardState: BoardData): CutBoard[] {
-    const list = new BoardList(boardState.dimension);
-    list.setCuts(BoardList.expandCuts(boardState.cuts));
+  static fromBoardData(length: number, cutInputs: CutInput[]): CutBoard[] {
+    const list = new BoardList(length);
+    list.setCuts(BoardList.expandCuts(cutInputs));
     return list.boardList;
   }
 

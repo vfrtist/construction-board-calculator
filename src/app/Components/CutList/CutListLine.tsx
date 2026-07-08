@@ -1,40 +1,24 @@
 import { useContext } from "react";
-import { SessionContext } from "../../Data/SessionContext";
 import { CutInput } from "../../Data/Structures";
+import { CardContext } from "../Generic/Card";
 
 interface CutBoardLineProps {
-  boardID: string;
   values: CutInput;
 }
 
-export default function CutBoardLine({ boardID, values }: CutBoardLineProps) {
-  const { boards, setBoards } = useContext(SessionContext);
-  const board = boards[boardID];
+export default function CutBoardLine({ values }: CutBoardLineProps) {
+  const { setCutInputs } = useContext(CardContext);
 
   function lineUpdater(newCut: CutInput) {
-    setBoards((prev) => ({
-      ...prev,
-      [boardID]: {
-        ...prev[boardID],
-        cuts: prev[boardID].cuts.map((cut) =>
-          cut.id === newCut.id ? newCut : cut
-        ),
-      },
-    }));
+    setCutInputs((prev) => prev.map((cut) => (cut.id === newCut.id ? newCut : cut)));
   }
 
   function removeLine() {
-    setBoards((prev) => ({
-      ...prev,
-      [boardID]: {
-        ...prev[boardID],
-        cuts: prev[boardID].cuts.filter((cut) => cut.id !== values.id),
-      },
-    }));
+    setCutInputs((prev) => prev.filter((cut) => cut.id !== values.id));
   }
 
   return (
-    <div className="CutBoardLine container horizontal">
+    <div className="CutListLine container horizontal">
       <input
         type="number"
         name="length"

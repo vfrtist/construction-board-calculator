@@ -8,23 +8,12 @@ export interface CutInput extends CutDimension {
   qty: number;
 }
 
-export interface BoardDimension {
-  id: string;
-  length: number;
-  width: number;
-  height: number;
-  name: string;
-}
-
-export interface BoardData {
-  dimension: BoardDimension;
-  cuts: CutInput[];
-}
-
-export type BoardDictionary = Record<string, BoardData>;
-
-export function getBoardDimension(): BoardDimension {
-  return { id: crypto.randomUUID(), length: 96, width: 2, height: 4, name: "" };
+export class ListNode {
+  next: ListNode | null = null;
+  value: number;
+  constructor(value: number) {
+    this.value = value;
+  }
 }
 
 export function getCutInput(): CutInput {

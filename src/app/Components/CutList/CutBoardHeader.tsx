@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { SessionContext } from "../Data/SessionContext";
-import { BoardDimension } from "../Data/Structures";
+import { SessionContext } from "../../Data/SessionContext";
+import { BoardDimension } from "../../Data/Structures";
 
 // this is a series of inputs for width, height and length, and description
 export default function CutBoardHeader({ values }: BoardDimension) {
