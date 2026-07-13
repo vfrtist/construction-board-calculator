@@ -8,12 +8,16 @@ class BoardNode extends ListNode {
 export class CutBoard {
   // For storing cut lengths of a single board
   length: number;
+  kerf: number;
   cuts: CutDimension[] = [];
   remainingLength: number;
+  id: string;
 
-  constructor(length: number) {
+  constructor(length: number, kerf: number = 0.125) {
     this.length = length;
     this.remainingLength = length;
+    this.kerf = kerf;
+    this.id = crypto.randomUUID();
   }
 
   cut(cutBoard: CutDimension) {
@@ -22,7 +26,9 @@ export class CutBoard {
     }
     this.cuts.push(cutBoard);
     this.remainingLength -= cutBoard.length;
-    this.remainingLength -= 0.125; // blade width
+    if (this.remainingLength > 0) {
+      this.remainingLength -= this.kerf;
+    }
   }
 
   get cutPlan(): CutDimension[] {
@@ -66,7 +72,7 @@ export class BoardList {
   get boardList(): CutBoard[] {
     this.calculate();
 
-    let boards: CutBoard[] = [];
+    const boards: CutBoard[] = [];
 
     if (this.head != null) {
       let current: BoardNode | null = this.head;

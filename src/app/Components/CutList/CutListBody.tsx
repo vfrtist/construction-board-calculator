@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { getCutInput } from "../../Data/Structures";
-import CutBoardHeader from "./CutBoardHeader";
 import CutBoardLine from "./CutListLine";
 import ThemeButton from "../Generic/ThemeButton";
 import { CardContext } from "../Generic/Card";
@@ -14,8 +13,13 @@ export default function CutListBody() {
   }
 
   return (
-    <div className="CutListBody card">
-      <CutBoardHeader values={boards[boardID].dimension} />
+    <div className="CutListBody">
+      <div className="CutListHeader container horizontal">
+        <div>Length</div>
+        <div></div>
+        <div>Qty</div>
+        <div>Name</div>
+      </div>
       <form action="" className="CutListLines container vertical">
         {cutInputs.map((values) => (
           <CutBoardLine

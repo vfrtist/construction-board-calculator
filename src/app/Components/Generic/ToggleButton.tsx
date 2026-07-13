@@ -1,22 +1,20 @@
-export interface ToggleButtonProps {
-	value: string;
+export interface ToggleButtonProps<T> {
+	value: T;
 	caption: string;
 	isActive?: boolean;
-	onClick?: Function;
+	onClick?: (value: T) => void;
 }
 
-export default function ToggleButton({
+export default function ToggleButton<T>({
 	value,
 	caption,
 	isActive,
 	onClick,
-}: ToggleButtonProps) {
+}: ToggleButtonProps<T>) {
 	return (
 		<button
-			key={value}
 			className={`ToggleButton ${isActive ? "active" : ""}`}
 			onClick={() => onClick?.(value)}
-			value={value}
 		>
 			{caption}
 		</button>

@@ -17,7 +17,7 @@ function* arrayReducer(
   let left = boards[0];
   let count = 1;
   for (let index = 1; index < boards.length; index++) {
-    let right = boards[index];
+    const right = boards[index];
     if (left.equals(right)) {
       count++;
     } else {
@@ -38,11 +38,11 @@ export default function BoardListBody() {
   const compactList = useMemo(() => arrayReducer(boardList), [boardList]);
 
   return (
-    <div className="BoardList card">
+    <div className="BoardListBody">
       <ul className="container vertical">
-        {[...compactList].map(([qty, value], index) => (
+        {[...compactList].map(([qty, value]) => (
           <Board
-            key={index.toString()}
+            key={value.id}
             length={value.length}
             board={value}
             qty={qty}

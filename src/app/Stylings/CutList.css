@@ -1,43 +1,42 @@
-  .CutListBody {
-      width: 100%;
+.CutListBody {
+	--grid: 2fr 1fr 2fr 8fr 1fr;
+	width: 100%;
+	padding: 20px 0px;
 
-      .CutBoardHeader {
-          width: 100%;
-          margin-bottom: 8px;
-          justify-content: space-between;
+	.CutListHeader {
+		display: grid;
+		grid-template-columns: var(--grid);
+		width: 100%;
+		justify-content: space-between;
+		text-align: left;
+	}
 
-          input {
-              width: 8ch;
-          }
+	.CutListLines {
 
-          .NameInput {
-              width: 100%;
-              border: none;
-              font-size: 18px;
-          }
-      }
+		.CutListLine {
+			display: grid;
+			grid-template-columns: var(--grid);
+			width: 100%;
+			justify-content: space-between;
 
-      .CutListLine {
-          width: 100%;
-          justify-content: space-between;
+			input:not(.name) {
+				width: 8ch;
+			}
 
-          input:not(.name) {
-              width: 8ch;
-          }
+			&:last-of-type {
+				margin-bottom: 20px;
+			}
+		}
+	}
 
-          &:last-of-type {
-              margin-bottom: 20px;
-          }
-      }
+	input {
+		border: none;
+		border-bottom: 1px solid #b6b6b6;
+		color: var(--font-color-dark);
+		padding: 4px;
+	}
 
-      input {
-          border: none;
-          border-bottom: 1px solid #b6b6b6;
-          color: var(--font-color-dark);
-          padding: 4px;
-      }
-
-      .add {
-          font-size: 20px;
-      }
-  }
+	.add {
+		font-size: 20px;
+	}
+}

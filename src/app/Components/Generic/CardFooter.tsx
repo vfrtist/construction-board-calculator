@@ -7,7 +7,6 @@ export default function CardFooter() {
   const { cardState, setCardState } = useContext(CardContext);
 
   return <ToggleButtonGroup
-    name="Card State"
     activeValue={cardState}
     onChange={setCardState}
   >

@@ -1,13 +1,10 @@
 import React from "react";
 import "../../Stylings/ThemeButton.css";
 
-export interface ThemeButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> { }
-
 export default function ThemeButton({
   children,
   ...buttonProps
-}: ThemeButtonProps) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button {...buttonProps} className={`ThemeButton ${buttonProps.className}`}>
       {children}

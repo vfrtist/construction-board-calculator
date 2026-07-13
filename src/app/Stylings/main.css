@@ -19,6 +19,7 @@ main {
   height: max(100dvh, auto);
   background: var(--neutral);
   text-align: center;
+  padding: 0px 14dvw;
 }
 
 button {

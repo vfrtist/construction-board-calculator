@@ -1,9 +1,8 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { CardContext } from "./Card";
 
 export default function CardHeader({ }) {
-	const [name, setName] = useState("Board Name");
-	const { boardLength, setBoardLength } = useContext(CardContext);
+	const { boardLength, setBoardLength, setName, name } = useContext(CardContext);
 
 	return (
 		<form action="" className="CutBoardHeader">
@@ -22,7 +21,7 @@ export default function CardHeader({ }) {
 				type="number"
 				name="length"
 				placeholder="96"
-				min={0}
+				// min={0}
 				value={boardLength}
 				onChange={(e) => {
 					setBoardLength(Number(e.target.value));
