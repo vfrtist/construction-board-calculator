@@ -20,7 +20,7 @@
 			justify-content: space-between;
 
 			input:not(.name) {
-				width: 8ch;
+				width: 5ch;
 			}
 
 			&:last-of-type {
