@@ -1,4 +1,4 @@
-import { IconKey, IconList } from "@/app/Data/IconList";
+import { IconKey, IconList } from "@/Data/IconList";
 
 export interface IconProps {
   iconKey: IconKey;

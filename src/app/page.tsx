@@ -1,9 +1,9 @@
 "use client";
 
-import Card from "@/app/UI/Generic/Card";
-import ThemeButton from "@/app/UI/Generic/ThemeButton";
+import Card from "@//UI/Generic/Card";
+import ThemeButton from "@/UI/Generic/ThemeButton";
 import { useState, SetStateAction } from "react";
-import { getBoardData, getEmptyProject, Project, ProjectData } from "@/app/Data/Structures";
+import { getBoardData, getEmptyProject, Project, ProjectData } from "@/Data/Structures";
 // import { TestData } from "./Data/TestData";
 
 export default function Home() {

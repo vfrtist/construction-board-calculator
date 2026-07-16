@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import CutBoardLine from "./CutListLine";
-import ThemeButton from "@/app/UI/Generic/ThemeButton";
-import { CardContext } from "@/app/UI/Generic/Card";
-import { getCutInput } from "@/app/Data/Structures";
-import "@/app/Stylings/CutList.css";
+import ThemeButton from "@/UI/Generic/ThemeButton";
+import { CardContext } from "@/UI/Generic/Card";
+import { getCutInput } from "@/Data/Structures";
+import "@/Stylings/CutList.css";
 
 export default function CutListBody() {
   const { cutInputs, setCutInputs } = useContext(CardContext);

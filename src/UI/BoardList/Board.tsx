@@ -1,4 +1,4 @@
-import { CutBoard } from "@/app/lib/optimizer";
+import { CutBoard } from "@/lib/optimizer";
 import SubBoard from "./SubBoard";
 
 export interface BoardProps {

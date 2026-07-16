@@ -1,4 +1,4 @@
-import { CutDimension, CutInput, ListNode } from "@/app/Data/Structures";
+import { CutDimension, CutInput, ListNode } from "@/Data/Structures";
 
 class BoardNode extends ListNode {
     items: CutBoard[] = [];

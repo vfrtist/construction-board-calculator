@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CardContext } from "./Card";
-import CutListBody from "@/app/UI/CutList/CutListBody";
-import BoardListBody from "@/app/UI/BoardList/BoardListBody";
+import CutListBody from "@/UI/CutList/CutListBody";
+import BoardListBody from "@/UI/BoardList/BoardListBody";
 
 export default function CardBody() {
   const { cardState } = useContext(CardContext);
