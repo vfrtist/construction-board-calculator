@@ -3,7 +3,7 @@ import { BoardList, CutBoard } from "./BoardList";
 
 export function getCutBoards(length: number, cutInputs: CutInput[]): CutBoard[] {
     const list = new BoardList(length);
-    list.setCuts(BoardList.expandCuts(cutInputs));
+    list.setCuts(cutInputs);
     return list.boardList;
 }
 

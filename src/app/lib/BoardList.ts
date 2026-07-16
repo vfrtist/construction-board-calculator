@@ -87,33 +87,8 @@ export class BoardList {
         return boards;
     }
 
-    setCuts(cuts: CutDimension[]) {
-        this.cuts = cuts;
-    }
-
-    static expandCuts(cuts: CutInput[]): CutDimension[] {
-        const expanded: CutDimension[] = [];
-
-        cuts.forEach((cut) => {
-            for (let i = 0; i < cut.qty; i++) {
-                expanded.push({ length: cut.length, name: cut.name });
-            }
-        });
-
-        return expanded;
-    }
-
-    getNewboard(cutLength: CutDimension): CutBoard {
-        const board = new CutBoard(this.length);
-        board.cut(cutLength);
-        return board;
-    }
-
-    addCut(cutLength: number, name: string, qty: number = 1) {
-        for (let index = 0; index < qty; index++) {
-            const cutBoard: CutDimension = { length: cutLength, name };
-            this.cuts.push(cutBoard);
-        }
+    setCuts(cuts: CutInput[]) {
+        this.cuts = this.expandCuts(cuts);
     }
 
     cutAllBoards() {
@@ -144,6 +119,31 @@ export class BoardList {
                 this.insertBoard(board);
             }
         });
+    }
+
+    expandCuts(cuts: CutInput[]): CutDimension[] {
+        const expanded: CutDimension[] = [];
+
+        cuts.forEach((cut) => {
+            for (let i = 0; i < cut.qty; i++) {
+                expanded.push({ length: cut.length, name: cut.name });
+            }
+        });
+
+        return expanded;
+    }
+
+    getNewboard(cutLength: CutDimension): CutBoard {
+        const board = new CutBoard(this.length);
+        board.cut(cutLength);
+        return board;
+    }
+
+    addCut(cutLength: number, name: string, qty: number = 1) {
+        for (let index = 0; index < qty; index++) {
+            const cutBoard: CutDimension = { length: cutLength, name };
+            this.cuts.push(cutBoard);
+        }
     }
 
     insertBoard(board: CutBoard) {
