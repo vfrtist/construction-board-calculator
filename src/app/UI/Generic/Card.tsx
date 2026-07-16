@@ -4,7 +4,7 @@ import { createContext, SetStateAction, useState, Dispatch } from "react";
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
-import { BoardData, CutInput, ProjectData } from "../../Data/Structures";
+import { BoardData, CutInput, ProjectData } from "@/app/Data/Structures";
 
 export type CardState = "board" | "cut";
 

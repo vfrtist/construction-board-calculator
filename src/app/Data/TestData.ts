@@ -1,4 +1,4 @@
-import { ProjectData } from "../Data/Structures";
+import { ProjectData } from "./Structures";
 
 export const TestData: ProjectData = {
     [crypto.randomUUID()]: {

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../Stylings/ThemeButton.css";
+import "@/app/Stylings/ThemeButton.css";
 
 export default function ThemeButton({
   children,

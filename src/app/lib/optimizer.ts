@@ -1,4 +1,4 @@
-import { CutInput } from "../Data/Structures";
+import { CutInput } from "@/app/Data/Structures";
 import { BoardList, CutBoard } from "./BoardList";
 
 export function getCutBoards(length: number, cutInputs: CutInput[]): CutBoard[] {

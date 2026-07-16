@@ -1,11 +1,9 @@
 "use client";
 
-import "@/app/Stylings/main.css";
-import "@/app/Stylings/colors.css";
-import Card from "./Components/Generic/Card";
-import ThemeButton from "./Components/Generic/ThemeButton";
+import Card from "@/app/UI/Generic/Card";
+import ThemeButton from "@/app/UI/Generic/ThemeButton";
 import { useState, SetStateAction } from "react";
-import { getBoardData, getEmptyProject, Project, ProjectData } from "./Data/Structures";
+import { getBoardData, getEmptyProject, Project, ProjectData } from "@/app/Data/Structures";
 // import { TestData } from "./Data/TestData";
 
 export default function Home() {
@@ -31,7 +29,7 @@ export default function Home() {
 	}
 
 	return (
-		<main>
+		<>
 			{Object.entries(projectData.boards).map(([id, card]) => (
 				<Card
 					key={id}
@@ -43,6 +41,6 @@ export default function Home() {
 			<ThemeButton type="button" className="add" onClick={addBoard}>
 				+
 			</ThemeButton>
-		</main>
+		</>
 	);
 }

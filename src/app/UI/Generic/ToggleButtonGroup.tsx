@@ -1,5 +1,5 @@
 import React from "react";
-import "../../Stylings/ToggleButtonGroup.css";
+import "@/app/Stylings/ToggleButtonGroup.css";
 import { ToggleButtonProps } from "./ToggleButton";
 
 export interface SettingsGroupProp<T> {
