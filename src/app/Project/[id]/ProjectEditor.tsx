@@ -1,14 +1,16 @@
 "use client";
 
-import Card from "@//UI/Generic/Card";
+import Card from "@/UI/Generic/Card";
 import ThemeButton from "@/UI/Generic/ThemeButton";
 import { useState, SetStateAction } from "react";
-import { getBoardData, getEmptyProject, Project, ProjectData } from "@/Data/Structures";
-// import { TestData } from "./Data/TestData";
+import { getBoardData, Project, ProjectBoards } from "@/Data/Structures";
 
-export default function Home() {
+interface ProjectEditorProps {
+    project: Project;
+}
 
-    const [projectData, setProject] = useState<Project>(getEmptyProject());
+export default function ProjectEditor({ project }: ProjectEditorProps) {
+    const [projectData, setProject] = useState<Project>(project);
 
     function addBoard() {
         setProject((prev) => {
@@ -17,7 +19,7 @@ export default function Home() {
         });
     }
 
-    function setProjectData(updater: SetStateAction<ProjectData>) {
+    function setProjectData(updater: SetStateAction<ProjectBoards>) {
         setProject(prev => ({
             ...prev,
             updatedAt: new Date().toISOString(),

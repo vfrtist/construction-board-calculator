@@ -4,7 +4,7 @@ import { createContext, SetStateAction, useState, Dispatch } from "react";
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
-import { BoardData, CutInput, ProjectData } from "@/Data/Structures";
+import { BoardData, CutInput, ProjectBoards } from "@/Data/Structures";
 
 export type CardState = "board" | "cut";
 
@@ -19,7 +19,7 @@ export interface CardData extends BoardData {
 interface CardProps {
   id: string;
   data: BoardData;
-  setProjectData: Dispatch<SetStateAction<ProjectData>>;
+  setProjectData: Dispatch<SetStateAction<ProjectBoards>>;
 }
 
 export const CardContext = createContext<CardData>({

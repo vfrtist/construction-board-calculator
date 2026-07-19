@@ -1,6 +1,7 @@
-import "@/app/Stylings/main.css";
-import "@/app/Stylings/colors.css";
+import "@/Stylings/main.css";
+import "@/Stylings/colors.css";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Construction Board Calculator",
@@ -13,6 +14,18 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <body>
         <main>
           {children}
+          <ul>
+            <h1>Navigation</h1>
+            <li>
+              <Link href="/Login">Login</Link>
+            </li>
+            <li>
+              <Link href="/Manager">Manager</Link>
+            </li>
+            <li>
+              <Link href="/Project">Project</Link>
+            </li>
+          </ul>
         </main>
       </body>
     </html>

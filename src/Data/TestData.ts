@@ -1,7 +1,7 @@
-import { ProjectData } from "./Structures";
+import { Project, ProjectBoards } from "./Structures";
 
-export const TestData: ProjectData = {
-    [crypto.randomUUID()]: {
+const Data1: ProjectBoards = {
+    ["board1"]: {
         name: "Board 1",
         boardLength: 96,
         cutInputs: [
@@ -21,7 +21,7 @@ export const TestData: ProjectData = {
         ],
     },
 
-    [crypto.randomUUID()]: {
+    ["board2"]: {
         name: "Board 2",
         boardLength: 144,
         cutInputs: [
@@ -41,7 +41,7 @@ export const TestData: ProjectData = {
         ],
     },
 
-    [crypto.randomUUID()]: {
+    ["board3"]: {
         name: "Board 3",
         boardLength: 96,
         cutInputs: [
@@ -55,15 +55,17 @@ export const TestData: ProjectData = {
             { id: crypto.randomUUID(), length: 72, name: "Upper Wall Base Trim", qty: 14 },
         ],
     },
-    [crypto.randomUUID()]: {
+    ["board4"]: {
         name: "Board 4",
         boardLength: 96,
         cutInputs: [
             { id: crypto.randomUUID(), length: 25, name: "Floor Board", qty: 40 },
         ],
     },
+}
 
-    [crypto.randomUUID()]: {
+const Data2: ProjectBoards = {
+    ["board5"]: {
         name: "Board 5",
         boardLength: 96,
         cutInputs: [
@@ -71,7 +73,7 @@ export const TestData: ProjectData = {
         ],
     },
 
-    [crypto.randomUUID()]: {
+    ["board6"]: {
         name: "Board 6",
         boardLength: 96,
         cutInputs: [
@@ -90,7 +92,7 @@ export const TestData: ProjectData = {
         ],
     },
 
-    [crypto.randomUUID()]: {
+    ["board7"]: {
         name: "Board 7",
         boardLength: 96,
         cutInputs: [
@@ -112,7 +114,7 @@ export const TestData: ProjectData = {
         ],
     },
 
-    [crypto.randomUUID()]: {
+    ["board8"]: {
         name: "Board 8",
         boardLength: 96,
         cutInputs: [
@@ -133,4 +135,18 @@ export const TestData: ProjectData = {
             { id: crypto.randomUUID(), length: 3.5, name: "Above Door", qty: 3 },
         ],
     },
+};
+
+export const Project1: Project = {
+    id: "lskdfflkjsdfd-lksddflkjsdfd",
+    name: "Project 1",
+    updatedAt: new Date().toISOString(),
+    boards: Data1,
+};
+
+export const Project2: Project = {
+    id: "slksdjfjfjfjfjfjfjfjfj",
+    name: "Project 2",
+    updatedAt: new Date().toISOString(),
+    boards: Data2,
 };

@@ -22,13 +22,13 @@ export interface BoardData {
 	cutInputs: CutInput[];
 }
 
-export type ProjectData = Record<string, BoardData>;
+export type ProjectBoards = Record<string, BoardData>;
 
 export interface Project {
 	id: string;
 	name: string;
 	updatedAt: string;
-	boards: ProjectData;
+	boards: ProjectBoards;
 }
 
 export function getCutInput(): CutInput {
@@ -42,7 +42,7 @@ export function getBoardData(): BoardData {
 export function getEmptyProject(): Project {
 	return {
 		id: crypto.randomUUID(),
-		name: "",
+		name: "New Project",
 		updatedAt: new Date().toISOString(),
 		boards: { [crypto.randomUUID()]: getBoardData() },
 	}

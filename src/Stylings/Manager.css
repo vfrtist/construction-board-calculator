@@ -1,0 +1,30 @@
+.FileGroup {
+    gap: 1rem;
+    padding: 1rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .FileGroupTitle {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .FileList {
+        gap: 1rem;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .FileTile {
+        width: 200px;
+        aspect-ratio: 1/1;
+        background: var(--foreground);
+
+        a {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
