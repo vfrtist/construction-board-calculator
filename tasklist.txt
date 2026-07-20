@@ -1,10 +1,12 @@
+Done
+-Create database schema
+
 
 General Tasks
--Create database schema
 -Populate database
--Create hooks/api? calls to get data out of database and populate into front end
 -Create debounce and direct saving methods for data execution.
 -Create header
+
 
 Manager
 -Design project manager screen.
@@ -20,16 +22,27 @@ Manager
     -Does this mean projects need read/write modes?
     -Relative to the database "templates" will need a universal ID to make their call not unique to the user. Any new templates would be pushed to all users.
 
+
 Logon
 -Design screen.
 -Implement log on procedure and storing of user information....
     -Again I can't tell if this is context or some other we based local storage cookies something.
 
+
 Project
 -*low priority* Rename and re-folder "Card" pieces into ProjectCard pieces. They are not generic.
 -Re-route loading a project from memory into state, as rendering an API from state.
+
 
 Visuals
 -Add subtle saving ui (think video game book writing animation) probably in the header. Possibly floating.
 -Find more references
 -Make icons
+
+
+SQL
+-Queries needed:
+    -Select all projects for a specific user
+    -Select data from a specific project
+    -Overwrite data for a specific project
+    -Create new project from a template

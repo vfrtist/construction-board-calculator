@@ -22,9 +22,6 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
             <li>
               <Link href="/Manager">Manager</Link>
             </li>
-            <li>
-              <Link href="/Project">Project</Link>
-            </li>
           </ul>
         </main>
       </body>
