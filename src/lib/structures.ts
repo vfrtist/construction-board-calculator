@@ -31,19 +31,6 @@ export interface Project {
 	boards: ProjectBoards;
 }
 
-export function getCutInput(): CutInput {
-	return { id: crypto.randomUUID(), length: 0, qty: 1, name: "" };
-}
-
-export function getBoardData(): BoardData {
-	return { name: "", boardLength: 96, cutInputs: [getCutInput()] };
-}
-
-export function getEmptyProject(): Project {
-	return {
-		id: crypto.randomUUID(),
-		name: "New Project",
-		updatedAt: new Date().toISOString(),
-		boards: { [crypto.randomUUID()]: getBoardData() },
-	}
+export interface Template extends Project {
+	description: string;
 }

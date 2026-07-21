@@ -2,35 +2,32 @@ import { useContext } from "react";
 import CutBoardLine from "./CutListLine";
 import ThemeButton from "@/UI/Generic/ThemeButton";
 import { CardContext } from "@/UI/Generic/Card";
-import { getCutInput } from "@/Data/Structures";
+import { newCutInput } from "@/lib/objects";
 import "@/Stylings/CutList.css";
 
 export default function CutListBody() {
-  const { cutInputs, setCutInputs } = useContext(CardContext);
+	const { cutInputs, setCutInputs } = useContext(CardContext);
 
-  function addLine() {
-    setCutInputs((prev) => [...prev, getCutInput()]);
-  }
+	function addLine() {
+		setCutInputs((prev) => [...prev, newCutInput()]);
+	}
 
-  return (
-    <div className="CutListBody">
-      <div className="CutListHeader container horizontal">
-        <div>Length</div>
-        <div></div>
-        <div>Qty</div>
-        <div>Name</div>
-      </div>
-      <form action="" className="CutListLines container vertical">
-        {cutInputs.map((values) => (
-          <CutBoardLine
-            key={`${values.id}`}
-            values={values}
-          />
-        ))}
-        <ThemeButton type="button" className="add" onClick={addLine}>
-          +
-        </ThemeButton>
-      </form>
-    </div>
-  );
+	return (
+		<div className="CutListBody">
+			<div className="CutListHeader container horizontal">
+				<div>Length</div>
+				<div></div>
+				<div>Qty</div>
+				<div>Name</div>
+			</div>
+			<form action="" className="CutListLines container vertical">
+				{cutInputs.map((values) => (
+					<CutBoardLine key={`${values.id}`} values={values} />
+				))}
+				<ThemeButton type="button" className="add" onClick={addLine}>
+					+
+				</ThemeButton>
+			</form>
+		</div>
+	);
 }
